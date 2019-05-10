@@ -1,20 +1,96 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="250" alt="Angular Logo"
-       src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="row">
+  <div class="col s12 m12">
+    <div class="card blue-grey darken-1">
+      <div class="card-content white-text">
+        <span class="card-title">Wordpress API</span>
+      </div>
+      <div class="card-action">
+        <button class="btn-flat waves-effect waves-light white-text" (click)="loadPosts()">Fetch 3 random posts</button>
+        <button class="btn-flat waves-effect waves-light white-text" (click)="loadComents()">Fetch one comment for each
+          post
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+
+<div class="row" *ngIf="!isLoaded">
+  <div class="col s12 m12 center">
+    <div class="preloader-wrapper big active">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="isLoaded">
+  <div class="row" *ngFor="let post of posts">
+    <div class="col s12 m12">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title" [innerHTML]="post.title"></span>
+          <div [innerHTML]="post.content" class="post-content" [ngClass]="{'opened':post.opened}"></div>
+          <div class="center">
+            <button class="waves-effect waves-teal btn expand_btn" *ngIf="!post.opened"
+                    (click)="post.opened=!post.opened">
+              <i class="material-icons left">expand_more</i> Expand
+            </button>
+          </div>
+          <hr>
+          <div>
+            <small>
+              Posted in {{post.date|moment}}, by {{post.author.name}}
+            </small>
+          </div>
+          <hr>
+          <div class="center-align" *ngIf="!post.comments_load && !post.comments_loading">
+            Click button FETCH ONE COMMENT FOR EACH POST at the top of the page to load comment
+          </div>
+          <div class="center-align" *ngIf="post.comments_loading">
+            <div class="col s12 m12 center">
+              <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div>
+                  <div class="gap-patch">
+                    <div class="circle"></div>
+                  </div>
+                  <div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="comments" *ngIf="post.comments_load">
+            <h5>Comments</h5>
+            <div class="comment" *ngFor="let comment of post.comments">
+              <div class="comment-avatar">
+                <img src="{{comment.author.avatar_URL}}" alt="" class="circle responsive-img">
+              </div>
+              <div class="comment-text">
+                <h5>{{comment.author.name}}</h5>
+                <div [innerHTML]="comment.content"></div>
+              </div>
+            </div>
+            <div class="center-align" *ngIf="!post.comments">
+              The post has no comments
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

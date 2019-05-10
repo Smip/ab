@@ -1,0 +1,23 @@
+.post-content:not(.opened) {
+  max-height: 50px;
+  overflow: hidden;
+}
+
+.expand_btn {
+  margin: 10px;
+}
+
+.comment {
+  position: relative;
+  .comment-avatar {
+    width: 100px;
+    float: left;
+    margin: 10px;
+  }
+  .comment-text {
+    display: inline-block;
+    vertical-align: middle;
+    width: calc(100% - 120px);
+  }
+}
+

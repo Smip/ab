@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class BaseApi {
-  private baseUrl = 'http://localhost/';
+  private baseUrl = 'https://public-api.wordpress.com/rest/v1.1/sites/en.blog.wordpress.com/';
 
   constructor(public http: HttpClient) {
   }
