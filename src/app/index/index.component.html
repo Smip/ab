@@ -1,13 +1,12 @@
 <div class="row">
   <div class="col s12 m12">
     <div class="card blue-grey darken-1">
-      <div class="card-content white-text">
-        <span class="card-title">Wordpress API</span>
-      </div>
       <div class="card-action">
-        <button class="btn-flat waves-effect waves-light white-text" (click)="loadPosts()">Fetch 3 random posts</button>
-        <button class="btn-flat waves-effect waves-light white-text" (click)="loadComents()">Fetch one comment for each
-          post
+        <button class="btn waves-effect waves-light white-text" (click)="loadPosts()">
+          Fetch 3 random posts
+        </button>
+        <button class="btn waves-effect waves-light white-text" (click)="loadComents()">
+          Fetch one comment for each post
         </button>
       </div>
     </div>
@@ -15,21 +14,7 @@
 </div>
 
 <div class="row" *ngIf="!isLoaded">
-  <div class="col s12 m12 center">
-    <div class="preloader-wrapper big active">
-      <div class="spinner-layer spinner-blue-only">
-        <div class="circle-clipper left">
-          <div class="circle"></div>
-        </div>
-        <div class="gap-patch">
-          <div class="circle"></div>
-        </div>
-        <div class="circle-clipper right">
-          <div class="circle"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ab-loader></ab-loader>
 </div>
 
 <ng-container *ngIf="isLoaded">
@@ -38,11 +23,17 @@
       <div class="card">
         <div class="card-content">
           <span class="card-title" [innerHTML]="post.title"></span>
-          <div [innerHTML]="post.content" class="post-content" [ngClass]="{'opened':post.opened}"></div>
+          <div [innerHTML]="post.content" class="post-content" [@slide]="post.opened ? 'opened' : 'closed'"
+               [ngClass]="{'opened':post.opened}"></div>
           <div class="center">
-            <button class="waves-effect waves-teal btn expand_btn" *ngIf="!post.opened"
+            <button class="waves-effect waves-teal btn expand_btn"
                     (click)="post.opened=!post.opened">
-              <i class="material-icons left">expand_more</i> Expand
+              <ng-container *ngIf="!post.opened">
+                <i class="material-icons left">expand_more</i> Expand
+              </ng-container>
+              <ng-container *ngIf="post.opened">
+                <i class="material-icons left">expand_less</i> Close
+              </ng-container>
             </button>
           </div>
           <hr>
@@ -56,20 +47,8 @@
             Click button FETCH ONE COMMENT FOR EACH POST at the top of the page to load comment
           </div>
           <div class="center-align" *ngIf="post.comments_loading">
-            <div class="col s12 m12 center">
-              <div class="preloader-wrapper big active">
-                <div class="spinner-layer spinner-blue-only">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div>
-                  <div class="gap-patch">
-                    <div class="circle"></div>
-                  </div>
-                  <div class="circle-clipper right">
-                    <div class="circle"></div>
-                  </div>
-                </div>
-              </div>
+            <div class="col s12 m12">
+              <ab-loader></ab-loader>
             </div>
             <div class="clearfix"></div>
           </div>

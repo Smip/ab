@@ -3,9 +3,10 @@ import {CommonModule} from '@angular/common';
 import {NgxMaterialize} from '@smip/ngx-materialize';
 import {LayoutsModule} from './layouts/layouts.module';
 import {MomentPipe} from './pipes/moment.pipe';
+import {LoaderComponent} from './components/loader/loader.component';
 
 @NgModule({
-  declarations: [MomentPipe],
+  declarations: [MomentPipe, LoaderComponent],
   imports: [
     CommonModule,
     LayoutsModule,
@@ -13,6 +14,7 @@ import {MomentPipe} from './pipes/moment.pipe';
   exports: [
     NgxMaterialize,
     MomentPipe,
+    LoaderComponent,
   ],
 })
 export class SharedModule {

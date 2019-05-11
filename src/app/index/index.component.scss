@@ -1,5 +1,8 @@
+@import "~materialize-css/sass/components/color-variables";
+@import "~materialize-css/sass/components/variables";
+
 .post-content:not(.opened) {
-  max-height: 50px;
+  //max-height: 50px;
   overflow: hidden;
 }
 
@@ -9,6 +12,7 @@
 
 .comment {
   position: relative;
+  word-wrap: break-word;
   .comment-avatar {
     width: 100px;
     float: left;
@@ -19,5 +23,18 @@
     vertical-align: middle;
     width: calc(100% - 120px);
   }
+  @media only screen and (max-width: $medium-screen) {
+    .comment-avatar {
+      width: 50px;
+      margin: 5px;
+    }
+    .comment-text {
+      width: calc(100% - 60px);
+    }
+  }
 }
 
+.card-action button {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
