@@ -1,22 +1,17 @@
-import {Injectable} from '@angular/core';
-import {BaseApi} from '../core/base-api';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {inject, TestBed} from '@angular/core/testing';
+import {PostsService} from './posts.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
+describe('PostsService', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [PostsService],
+    });
+  });
 
-@Injectable()
-export class PostsService extends BaseApi {
+  it('should be created', inject([PostsService], (service: PostsService) => {
+    expect(service).toBeTruthy();
+  }));
 
-  constructor(public http: HttpClient) {
-    super(http);
-  }
-
-  getPosts(data): Observable<any> {
-    return this.get(`posts`, data);
-  }
-
-  getCommentToPost(postId): Observable<any> {
-    return this.get(`posts/${postId}/replies/`);
-  }
-
-}
+});

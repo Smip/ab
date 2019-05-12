@@ -11,12 +11,12 @@ export class PostsService extends BaseApi {
     super(http);
   }
 
-  getPosts(data): Observable<any> {
+  getPosts(data = {}): Observable<any> {
     return this.get(`posts`, data);
   }
 
-  getCommentToPost(postId): Observable<any> {
-    return this.get(`posts/${postId}/replies/`);
+  getCommentToPost(postId, data = {}): Observable<any> {
+    return this.get(`posts/${postId}/replies/`, data);
   }
 
 }

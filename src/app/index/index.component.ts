@@ -53,7 +53,7 @@ export class IndexComponent implements OnInit, OnDestroy {
     this.subscription2 = from(this.posts).pipe(
       filter(post => post.discussion.comment_count > 0), // filter posts without comments
       map(
-        post => this.postsService.getCommentToPost(post.ID)
+        post => this.postsService.getCommentToPost(post.ID, {number: 1})
                     .pipe(
                       map(response => {
                           return [post.ID, response];
